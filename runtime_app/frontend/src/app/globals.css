@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+:root {
+  /* Enterprise Evidence Intelligence Workspace Color Tokens */
+  --navy-sidebar: #111C2D;
+  --deep-slate: #243A52;
+  --workspace-bg: #F7F8FA;
+  --mist-gray: #E8EDF2;
+  --surface-white: #FFFFFF;
+  --text-primary: #172334;
+  --text-secondary: #64748B;
+  --border-light: #DCE3EA;
+
+  /* Verification Status Tokens */
+  --status-verified: #159B83;
+  --status-review: #D69A38;
+  --status-unverifiable: #64748B;
+  --status-conflict: #C65B5B;
+}
+
+body {
+  background-color: var(--workspace-bg);
+  color: var(--text-primary);
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Headings font styling */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Technical font styling */
+.font-mono-code {
+  font-family: var(--font-ibm-mono), monospace;
+}
+
+/* Enterprise Subtle Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F1F4F8;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Enterprise Subtle Shadows */
+.shadow-enterprise-sm {
+  box-shadow: 0 1px 2px 0 rgba(17, 28, 45, 0.04);
+}
+
+.shadow-enterprise {
+  box-shadow: 0 1px 3px 0 rgba(17, 28, 45, 0.06), 0 1px 2px -1px rgba(17, 28, 45, 0.04);
+}
+
+.shadow-enterprise-md {
+  box-shadow: 0 4px 6px -1px rgba(17, 28, 45, 0.07), 0 2px 4px -2px rgba(17, 28, 45, 0.05);
+}
+
+/* Subtle Enterprise Grid Background for workspace inspection */
+.bg-workspace-pattern {
+  background-size: 24px 24px;
+  background-image: 
+    linear-gradient(to right, rgba(220, 227, 234, 0.5) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(220, 227, 234, 0.5) 1px, transparent 1px);
+}

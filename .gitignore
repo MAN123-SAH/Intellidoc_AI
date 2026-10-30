@@ -1,0 +1,94 @@
+# IntelliDoc AI — Comprehensive Git Ignore Rules
+
+# ─── Environment Variables & Credentials (CRITICAL) ───────────
+.env
+.env.*
+*.env
+!.env.example
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# ─── Python & Virtual Environments ────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+runtime_app/backend/venv/
+offline_research/venv/
+
+# ─── Next.js & Frontend Node Modules ──────────────────────────
+node_modules/
+runtime_app/frontend/node_modules/
+.next/
+runtime_app/frontend/.next/
+out/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+*.tsbuildinfo
+next-env.d.ts
+
+# ─── Local User Document Uploads ──────────────────────────────
+# Keep directory structure with .gitkeep but ignore uploaded files
+runtime_app/backend/uploads/*
+!runtime_app/backend/uploads/.gitkeep
+
+# ─── Large Model Checkpoints (>100MB files cannot be pushed to standard Git) ──
+*.safetensors
+*.bin
+*.pt
+*.pth
+offline_research/checkpoints/**/model.safetensors
+offline_research/checkpoints/**/pytorch_model.bin
+offline_research/checkpoints/**/optimizer.pt
+offline_research/checkpoints/**/scheduler.pt
+
+# ─── Large Public Datasets (Downloadable via provided scripts/notebooks) ──────
+offline_research/datasets_public/funsd/training_data/
+offline_research/datasets_public/funsd/testing_data/
+offline_research/datasets_public/cord/train/
+offline_research/datasets_public/cord/dev/
+offline_research/datasets_public/cord/test/
+*.zip
+*.tar.gz
+*.tar
+
+# ─── Operating System & IDE Files ─────────────────────────────
+.DS_Store
+Thumbs.db
+Desktop.ini
+ehthumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ─── Temporary & Log Files ────────────────────────────────────
+*.log
+tmp/
+temp/

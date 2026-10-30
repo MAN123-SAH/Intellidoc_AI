@@ -1,0 +1,64 @@
+{
+  "dataset_name": "CORD (Consolidated Receipt Dataset for Post-OCR Parsing)",
+  "total_receipts": 782,
+  "splits": {
+    "train": {
+      "images_count": 609,
+      "annotations_count": 768,
+      "paired_receipts": 582,
+      "total_word_tokens": 18641
+    },
+    "dev": {
+      "images_count": 100,
+      "annotations_count": 100,
+      "paired_receipts": 100,
+      "total_word_tokens": 2186
+    },
+    "test": {
+      "images_count": 100,
+      "annotations_count": 100,
+      "paired_receipts": 100,
+      "total_word_tokens": 2356
+    }
+  },
+  "categories_distribution": {
+    "menu.price": 2508,
+    "menu.nm": 2506,
+    "menu.cnt": 2334,
+    "total.total_price": 969,
+    "menu.unitprice": 728,
+    "sub_total.subtotal_price": 667,
+    "total.cashprice": 649,
+    "total.changeprice": 616,
+    "sub_total.tax_price": 444,
+    "menu.sub_nm": 378,
+    "total.menuqty_cnt": 281,
+    "menu.sub_cnt": 174,
+    "total.creditcardprice": 151,
+    "menu.sub_price": 150,
+    "sub_total.service_price": 122,
+    "sub_total.etc": 122,
+    "menu.num": 109,
+    "menu.discountprice": 109,
+    "sub_total.discount_price": 80,
+    "total.menutype_cnt": 53,
+    "total.emoneyprice": 53,
+    "total.total_etc": 35,
+    "menu.sub_unitprice": 11,
+    "menu.etc": 9,
+    "menu.itemsubtotal": 7
+  },
+  "arithmetic_fields_detected": {
+    "menu.price": 2508,
+    "menu.nm": 2506,
+    "menu.cnt": 2334,
+    "total.total_price": 969,
+    "menu.unitprice": 728,
+    "sub_total.subtotal_price": 667,
+    "total.cashprice": 649,
+    "total.changeprice": 616,
+    "sub_total.tax_price": 444,
+    "total.creditcardprice": 151,
+    "sub_total.service_price": 122
+  }
+}

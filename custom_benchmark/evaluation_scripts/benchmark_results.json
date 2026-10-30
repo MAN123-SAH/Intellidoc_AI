@@ -1,0 +1,216 @@
+{
+  "metrics": {
+    "total_test_cases": 9,
+    "true_positives": 6,
+    "true_negatives": 3,
+    "false_positives": 0,
+    "false_negatives": 0,
+    "accuracy_pct": 100.0,
+    "precision_pct": 100.0,
+    "recall_pct": 100.0,
+    "f1_score_pct": 100.0,
+    "llm_arithmetic_hallucination_pct": 0.0,
+    "total_elapsed_seconds": 99.75,
+    "avg_seconds_per_document": 11.08
+  },
+  "test_cases": [
+    {
+      "id": "INV_01_GENUINE",
+      "category": "genuine",
+      "type": "invoice",
+      "expected_decision": "verified",
+      "expected_failures": [],
+      "actual_decision": "verified",
+      "failed_rules": [],
+      "passed_rules": [
+        "ARITHMETIC_TOTAL_CONSISTENCY",
+        "LINE_ITEM_1_ARITHMETIC",
+        "LINE_ITEM_2_ARITHMETIC",
+        "TEMPORAL_CHRONOLOGY",
+        "EXTERNAL_VENDOR_REGISTRY"
+      ],
+      "checks_passed": 5,
+      "checks_failed": 0,
+      "explanation": "The document has been successfully VERIFIED. All 5 mathematical, temporal, and authority registry checks passed with 100% consistency.",
+      "elapsed_seconds": 40.96,
+      "is_correct": true
+    },
+    {
+      "id": "INV_02_GENUINE",
+      "category": "genuine",
+      "type": "invoice",
+      "expected_decision": "verified",
+      "expected_failures": [],
+      "actual_decision": "verified",
+      "failed_rules": [],
+      "passed_rules": [
+        "ARITHMETIC_TOTAL_CONSISTENCY",
+        "LINE_ITEM_1_ARITHMETIC",
+        "TEMPORAL_CHRONOLOGY",
+        "EXTERNAL_VENDOR_REGISTRY"
+      ],
+      "checks_passed": 4,
+      "checks_failed": 0,
+      "explanation": "The document has been successfully VERIFIED. All 4 mathematical, temporal, and authority registry checks passed with 100% consistency.",
+      "elapsed_seconds": 5.4,
+      "is_correct": true
+    },
+    {
+      "id": "INV_03_ARITHMETIC_TAMPERED",
+      "category": "arithmetic_tampered",
+      "type": "invoice",
+      "expected_decision": "requires_review",
+      "expected_failures": [
+        "ARITHMETIC_TOTAL_CONSISTENCY"
+      ],
+      "actual_decision": "requires_review",
+      "failed_rules": [
+        "ARITHMETIC_TOTAL_CONSISTENCY"
+      ],
+      "passed_rules": [
+        "LINE_ITEM_1_ARITHMETIC",
+        "TEMPORAL_CHRONOLOGY",
+        "EXTERNAL_VENDOR_REGISTRY"
+      ],
+      "checks_passed": 3,
+      "checks_failed": 1,
+      "explanation": "The verification engine flagged this document as REQUIRES_HUMAN_REVIEW. Detected 1 discrepancy(ies):\n• Arithmetic mismatch: Subtotal (1000.0) + Tax (80.0) + Shipping (20.0) = 1100.0, but document claims 1450.0 (Difference: $350.00).",
+      "elapsed_seconds": 5.67,
+      "is_correct": true
+    },
+    {
+      "id": "INV_04_TEMPORAL_ANOMALY",
+      "category": "temporal_anomaly",
+      "type": "invoice",
+      "expected_decision": "requires_review",
+      "expected_failures": [
+        "TEMPORAL_CHRONOLOGY"
+      ],
+      "actual_decision": "requires_review",
+      "failed_rules": [
+        "TEMPORAL_CHRONOLOGY"
+      ],
+      "passed_rules": [
+        "ARITHMETIC_TOTAL_CONSISTENCY",
+        "LINE_ITEM_1_ARITHMETIC",
+        "EXTERNAL_VENDOR_REGISTRY"
+      ],
+      "checks_passed": 3,
+      "checks_failed": 1,
+      "explanation": "The verification engine flagged this document as REQUIRES_HUMAN_REVIEW. Detected 1 discrepancy(ies):\n• Temporal anomaly detected: Due date (2024-03-20) precedes invoice issue date (2024-08-20).",
+      "elapsed_seconds": 4.98,
+      "is_correct": true
+    },
+    {
+      "id": "INV_05_UNREGISTERED_VENDOR",
+      "category": "unregistered_vendor",
+      "type": "invoice",
+      "expected_decision": "requires_review",
+      "expected_failures": [
+        "EXTERNAL_VENDOR_REGISTRY"
+      ],
+      "actual_decision": "requires_review",
+      "failed_rules": [
+        "EXTERNAL_VENDOR_REGISTRY"
+      ],
+      "passed_rules": [
+        "ARITHMETIC_TOTAL_CONSISTENCY",
+        "LINE_ITEM_1_ARITHMETIC",
+        "TEMPORAL_CHRONOLOGY"
+      ],
+      "checks_passed": 3,
+      "checks_failed": 1,
+      "explanation": "The verification engine flagged this document as REQUIRES_HUMAN_REVIEW. Detected 1 discrepancy(ies):\n• Vendor 'Vanguard Phantom Global' not found in official Authority Registry.",
+      "elapsed_seconds": 7.73,
+      "is_correct": true
+    },
+    {
+      "id": "INV_06_SUSPENDED_VENDOR",
+      "category": "suspended_vendor",
+      "type": "invoice",
+      "expected_decision": "requires_review",
+      "expected_failures": [
+        "EXTERNAL_VENDOR_REGISTRY"
+      ],
+      "actual_decision": "requires_review",
+      "failed_rules": [
+        "EXTERNAL_VENDOR_REGISTRY"
+      ],
+      "passed_rules": [
+        "ARITHMETIC_TOTAL_CONSISTENCY",
+        "LINE_ITEM_1_ARITHMETIC",
+        "TEMPORAL_CHRONOLOGY"
+      ],
+      "checks_passed": 3,
+      "checks_failed": 1,
+      "explanation": "The verification engine flagged this document as REQUIRES_HUMAN_REVIEW. Detected 1 discrepancy(ies):\n• Vendor 'Global Tech Logistics' found in Authority Registry but is flagged as SUSPENDED/INACTIVE.",
+      "elapsed_seconds": 5.26,
+      "is_correct": true
+    },
+    {
+      "id": "INV_07_LINE_ITEM_TAMPERED",
+      "category": "line_item_tampered",
+      "type": "invoice",
+      "expected_decision": "requires_review",
+      "expected_failures": [
+        "LINE_ITEM_1_ARITHMETIC"
+      ],
+      "actual_decision": "requires_review",
+      "failed_rules": [
+        "LINE_ITEM_1_ARITHMETIC"
+      ],
+      "passed_rules": [
+        "ARITHMETIC_TOTAL_CONSISTENCY",
+        "TEMPORAL_CHRONOLOGY",
+        "EXTERNAL_VENDOR_REGISTRY"
+      ],
+      "checks_passed": 3,
+      "checks_failed": 1,
+      "explanation": "The verification engine flagged this document as REQUIRES_HUMAN_REVIEW. Detected 1 discrepancy(ies):\n• Line item 1 mismatch: Qty (4.0) × Price (150.0) = 600.0, but line total claims 800.0.",
+      "elapsed_seconds": 5.73,
+      "is_correct": true
+    },
+    {
+      "id": "PAIR_08_CONSISTENT",
+      "category": "cross_document_consistent",
+      "type": "po_invoice_pair",
+      "expected_decision": "verified",
+      "expected_failures": [],
+      "actual_decision": "verified",
+      "failed_rules": [],
+      "passed_rules": [
+        "CROSS_DOCUMENT_VENDOR_MATCH",
+        "CROSS_DOCUMENT_PO_TOTAL_MATCH",
+        "CROSS_DOCUMENT_PO_QUANTITY_MATCH"
+      ],
+      "checks_passed": 3,
+      "checks_failed": 0,
+      "explanation": "All 3 cross-document reconciliation checks passed. Invoice is consistent with the authorized Purchase Order.",
+      "elapsed_seconds": 11.84,
+      "is_correct": true
+    },
+    {
+      "id": "PAIR_09_INCONSISTENT_OVERBILL",
+      "category": "cross_document_overbill",
+      "type": "po_invoice_pair",
+      "expected_decision": "requires_review",
+      "expected_failures": [
+        "CROSS_DOCUMENT_PO_QUANTITY_MATCH",
+        "CROSS_DOCUMENT_PO_TOTAL_MATCH"
+      ],
+      "actual_decision": "requires_review",
+      "failed_rules": [
+        "CROSS_DOCUMENT_PO_TOTAL_MATCH",
+        "CROSS_DOCUMENT_PO_QUANTITY_MATCH"
+      ],
+      "passed_rules": [
+        "CROSS_DOCUMENT_VENDOR_MATCH"
+      ],
+      "checks_passed": 1,
+      "checks_failed": 2,
+      "explanation": "Cross-document reconciliation flagged REQUIRES_HUMAN_REVIEW. Detected 2 discrepancy(ies):\n• Unauthorized overcharge: Invoiced total ($864.00) exceeds authorized PO total ($540.00) by $324.00.\n• Quantity overbill detected: Invoice claims 8.0 units, but approved PO only authorized 5.0 units.",
+      "elapsed_seconds": 12.18,
+      "is_correct": true
+    }
+  ]
+}

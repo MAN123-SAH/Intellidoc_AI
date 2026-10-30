@@ -1,0 +1,149 @@
+[
+  {
+    "id": "INV_01_GENUINE",
+    "file": "invoices\\genuine\\INV_01_GENUINE.png",
+    "type": "invoice",
+    "category": "genuine",
+    "expected_decision": "verified",
+    "expected_failures": [],
+    "metadata": {
+      "vendor_name": "Acme Industrial Supplies",
+      "invoice_total": 1100.0,
+      "invoice_subtotal": 1000.0,
+      "invoice_tax": 80.0,
+      "invoice_shipping": 20.0,
+      "invoice_date": "2024-05-10",
+      "due_date": "2024-06-10"
+    }
+  },
+  {
+    "id": "INV_02_GENUINE",
+    "file": "invoices\\genuine\\INV_02_GENUINE.png",
+    "type": "invoice",
+    "category": "genuine",
+    "expected_decision": "verified",
+    "expected_failures": [],
+    "metadata": {
+      "vendor_name": "Saldo Apps",
+      "invoice_total": 545.0,
+      "invoice_subtotal": 500.0,
+      "invoice_tax": 45.0,
+      "invoice_shipping": 0.0,
+      "invoice_date": "2024-04-01",
+      "due_date": "2024-04-30"
+    }
+  },
+  {
+    "id": "INV_03_ARITHMETIC_TAMPERED",
+    "file": "invoices\\tampered\\INV_03_ARITHMETIC_TAMPERED.png",
+    "type": "invoice",
+    "category": "arithmetic_tampered",
+    "expected_decision": "requires_review",
+    "expected_failures": [
+      "ARITHMETIC_TOTAL_CONSISTENCY"
+    ],
+    "metadata": {
+      "vendor_name": "Acme Industrial Supplies",
+      "invoice_total": 1450.0,
+      "invoice_subtotal": 1000.0,
+      "invoice_tax": 80.0,
+      "invoice_shipping": 20.0,
+      "injected_error": "Grand total padded by $350.00 above sum of parts"
+    }
+  },
+  {
+    "id": "INV_04_TEMPORAL_ANOMALY",
+    "file": "invoices\\tampered\\INV_04_TEMPORAL_ANOMALY.png",
+    "type": "invoice",
+    "category": "temporal_anomaly",
+    "expected_decision": "requires_review",
+    "expected_failures": [
+      "TEMPORAL_CHRONOLOGY"
+    ],
+    "metadata": {
+      "vendor_name": "Saldo Apps",
+      "invoice_date": "2024-08-20",
+      "due_date": "2024-03-20",
+      "injected_error": "Due date precedes invoice issue date"
+    }
+  },
+  {
+    "id": "INV_05_UNREGISTERED_VENDOR",
+    "file": "invoices\\tampered\\INV_05_UNREGISTERED_VENDOR.png",
+    "type": "invoice",
+    "category": "unregistered_vendor",
+    "expected_decision": "requires_review",
+    "expected_failures": [
+      "EXTERNAL_VENDOR_REGISTRY"
+    ],
+    "metadata": {
+      "vendor_name": "Vanguard Phantom Global",
+      "injected_error": "Vendor not found in official authority registry"
+    }
+  },
+  {
+    "id": "INV_06_SUSPENDED_VENDOR",
+    "file": "invoices\\tampered\\INV_06_SUSPENDED_VENDOR.png",
+    "type": "invoice",
+    "category": "suspended_vendor",
+    "expected_decision": "requires_review",
+    "expected_failures": [
+      "EXTERNAL_VENDOR_REGISTRY"
+    ],
+    "metadata": {
+      "vendor_name": "Global Tech Logistics",
+      "injected_error": "Vendor is certified until 2024-01-01 and flagged SUSPENDED"
+    }
+  },
+  {
+    "id": "INV_07_LINE_ITEM_TAMPERED",
+    "file": "invoices\\tampered\\INV_07_LINE_ITEM_TAMPERED.png",
+    "type": "invoice",
+    "category": "line_item_tampered",
+    "expected_decision": "requires_review",
+    "expected_failures": [
+      "LINE_ITEM_1_ARITHMETIC"
+    ],
+    "metadata": {
+      "vendor_name": "Acme Industrial Supplies",
+      "injected_error": "Line item total is $800.00 instead of 4 * 150 = $600.00"
+    }
+  },
+  {
+    "id": "PAIR_08_CONSISTENT",
+    "type": "po_invoice_pair",
+    "category": "cross_document_consistent",
+    "po_file": "po_invoice_pairs\\consistent\\PO_08_CONSISTENT.png",
+    "invoice_file": "po_invoice_pairs\\consistent\\INV_08_CONSISTENT.png",
+    "expected_decision": "verified",
+    "expected_failures": [],
+    "metadata": {
+      "po_number": "PO-2024-801",
+      "invoice_number": "INV-2024-801",
+      "vendor_name": "Acme Industrial Supplies",
+      "matched_quantity": 10,
+      "matched_total": 285.0
+    }
+  },
+  {
+    "id": "PAIR_09_INCONSISTENT_OVERBILL",
+    "type": "po_invoice_pair",
+    "category": "cross_document_overbill",
+    "po_file": "po_invoice_pairs\\inconsistent\\PO_09_APPROVED.png",
+    "invoice_file": "po_invoice_pairs\\inconsistent\\INV_09_OVERBILLED.png",
+    "expected_decision": "requires_review",
+    "expected_failures": [
+      "CROSS_DOCUMENT_PO_QUANTITY_MATCH",
+      "CROSS_DOCUMENT_PO_TOTAL_MATCH"
+    ],
+    "metadata": {
+      "po_number": "PO-2024-902",
+      "invoice_number": "INV-2024-902",
+      "po_quantity": 5,
+      "invoice_quantity": 8,
+      "po_total": 540.0,
+      "invoice_total": 864.0,
+      "injected_error": "Invoice bills 8 units ($864) exceeding approved PO of 5 units ($540)"
+    }
+  }
+]
