@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: intellidoc-api
+    runtime: docker
+    dockerfilePath: runtime_app/backend/Dockerfile
+    dockerContext: runtime_app/backend
+    plan: free
+    region: oregon
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: DEBUG
+        value: "false"
+      - key: ALLOWED_ORIGINS
+        value: "*"
+      - key: DATABASE_URL
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: SECRET_KEY
+        generateValue: true
