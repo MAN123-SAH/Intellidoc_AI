@@ -42,6 +42,18 @@ app.include_router(documents_router)
 app.include_router(claims_router)
 app.include_router(verification_router)
 
+# Ensure database tables exist on startup
+from app.database import engine, Base
+import app.models  # noqa: F401
+
+@app.on_event("startup")
+def startup_db_init():
+    try:
+        Base.metadata.create_all(bind=engine)
+        print("Database tables initialized successfully.")
+    except Exception as e:
+        print(f"Database initialization notice: {e}")
+
 # Mount uploads directory for static asset viewing
 upload_dir = Path(os.getenv("UPLOAD_DIR", "uploads")).resolve()
 upload_dir.mkdir(parents=True, exist_ok=True)
