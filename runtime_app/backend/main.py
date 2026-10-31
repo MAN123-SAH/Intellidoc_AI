@@ -58,6 +58,17 @@ upload_dir.mkdir(parents=True, exist_ok=True)
 app.mount("/uploads", StaticFiles(directory=str(upload_dir)), name="uploads")
 
 
+@app.get("/")
+def root():
+    return {
+        "service": "IntelliDoc AI Runtime API",
+        "status": "online",
+        "docs": "/docs",
+        "health": "/health",
+        "version": "1.0.0"
+    }
+
+
 @app.get("/health")
 def health_check():
     return {

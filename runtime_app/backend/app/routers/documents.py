@@ -75,10 +75,29 @@ def get_page_image(
         Page.page_number == page_number
     ).first()
 
-    if not page or not page.image_path or not Path(page.image_path).exists():
-        raise HTTPException(status_code=404, detail="Page image not found")
+    target_path = page.image_path if page else None
+    if not target_path or not Path(target_path).exists():
+        resolved = None
+        if target_path and page:
+            filename = Path(target_path).name
+            doc_id = document_id
+            candidates = [
+                Path(os.getenv("UPLOAD_DIR", "uploads")).resolve() / doc_id / filename,
+                Path("uploads") / doc_id / filename,
+                Path("/app/uploads") / doc_id / filename,
+            ]
+            for c in candidates:
+                if c.exists():
+                    resolved = str(c)
+                    break
+        if resolved:
+            target_path = resolved
+            page.image_path = resolved
+            db.commit()
+        else:
+            raise HTTPException(status_code=404, detail="Page image not found on disk")
 
-    return FileResponse(page.image_path, media_type="image/png")
+    return FileResponse(target_path, media_type="image/png")
 
 
 @router.get("/{document_id}/pages/{page_number}/regions", response_model=List[OCRRegionResponse])

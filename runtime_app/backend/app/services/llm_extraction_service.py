@@ -97,10 +97,35 @@ def extract_claims_with_gemini(document: Document, db: Session) -> List[Claim]:
         raise HTTPException(status_code=400, detail="Document has no pages.")
 
     first_page = document.pages[0]
-    if not first_page.image_path or not Path(first_page.image_path).exists():
-        raise HTTPException(status_code=404, detail="Page image not found on disk.")
+    page_img_path = first_page.image_path
 
-    with Image.open(first_page.image_path) as img:
+    # Check if page image exists or locate it relative to current uploads directory
+    if not page_img_path or not Path(page_img_path).exists():
+        resolved = None
+        if page_img_path:
+            filename = Path(page_img_path).name
+            doc_id = document.id
+            candidates = [
+                Path(os.getenv("UPLOAD_DIR", "uploads")).resolve() / doc_id / filename,
+                Path("uploads") / doc_id / filename,
+                Path("/app/uploads") / doc_id / filename,
+            ]
+            for c in candidates:
+                if c.exists():
+                    resolved = str(c)
+                    break
+
+        if resolved:
+            page_img_path = resolved
+            first_page.image_path = resolved
+            db.commit()
+        else:
+            raise HTTPException(
+                status_code=404,
+                detail="Document image not found on disk (cleared during server restart). Please upload your document again in Document Intake."
+            )
+
+    with Image.open(page_img_path) as img:
         page_image = img.convert("RGB")
 
     # Collect existing OCR regions for coordinate matching

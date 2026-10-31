@@ -40,22 +40,26 @@ def get_layout_model(checkpoint_path: Optional[str] = None):
     if target and Path(target).exists() and (Path(target) / "config.json").exists():
         model_source = str(target)
     else:
-        # 2. Check local relative directory safely (without assuming fixed parents count)
+        # 2. Check local relative directory safely (prioritizing CORD 90% F1 model)
         candidate = None
         for p in Path(__file__).resolve().parents:
-            chk = p / "offline_research" / "checkpoints" / "layoutlmv3_funsd" / "final_model"
-            if chk.exists() and (chk / "config.json").exists():
-                candidate = str(chk)
+            chk_cord = p / "offline_research" / "checkpoints" / "layoutlmv3_cord" / "final_model"
+            if chk_cord.exists() and (chk_cord / "config.json").exists():
+                candidate = str(chk_cord)
+                break
+            chk_funsd = p / "offline_research" / "checkpoints" / "layoutlmv3_funsd" / "final_model"
+            if chk_funsd.exists() and (chk_funsd / "config.json").exists():
+                candidate = str(chk_funsd)
                 break
         
         # 3. If no local checkpoint found (e.g. in cloud container), load standard Hugging Face model
-        model_source = candidate or os.getenv("LAYOUTLMV3_HUB_MODEL", "nielsr/layoutlmv3-finetuned-funsd")
+        model_source = candidate or os.getenv("LAYOUTLMV3_HUB_MODEL", "TheF1rstP/layoutlmv3-finetuned-cord")
 
     print(f"[LayoutService] Loading LayoutLMv3 model from {model_source}...")
     _PROCESSOR = LayoutLMv3Processor.from_pretrained(model_source, apply_ocr=False)
-    _MODEL = LayoutLMv3ForTokenClassification.from_pretrained(model_source)
+    _MODEL = LayoutLMv3ForTokenClassification.from_pretrained(model_source, low_cpu_mem_usage=True)
     _MODEL.eval()
-    print(f"[LayoutService] LayoutLMv3 loaded successfully with {len(_MODEL.config.id2label)} classes.")
+    print(f"[LayoutService] LayoutLMv3 loaded successfully with {len(_MODEL.config.id2label)} classes: {list(_MODEL.config.id2label.values())}")
 
     return _MODEL, _PROCESSOR
 
